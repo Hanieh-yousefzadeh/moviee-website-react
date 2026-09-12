@@ -18,7 +18,7 @@ function Genre() {
         fetchShows();
     }, [])
     const filter = shows.filter((show) => (
-        show.genres.includes(genre)
+        show.genres.includes(genre[0].toUpperCase()+genre.slice(1))
     ));
     console.log(filter)
     return (
