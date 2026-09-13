@@ -12,7 +12,8 @@ function Genre() {
             const response = await fetch("https://api.tvmaze.com/shows?page=1")
             const data = await response.json();
             setShows(data);
-            console.log(data[0].genres);
+            // console.log(data[0].genres);
+            // console.log(data.filter((show) => show.genres.includes("Action")));
         }
 
         fetchShows();

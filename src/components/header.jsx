@@ -2,9 +2,9 @@ import { Link } from "react-router";
 function Header() {
     return (
         <header>
-            <Link to="genre/Drama">Drama</Link>
+            <Link to="genre/drama">Drama</Link>
             <Link to="genre/Comedy">Comedy</Link>
-            <Link to="genre/Ation">Action</Link>
+            <Link to="genre/Action">Action</Link>
         </header>
     )
 };

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import ShowCart from "../components/showCart";
+import Header from "../components/header";
+import { Link } from "react-router";
 function Home() {
 
     const [shows, setShows] = useState([]);
@@ -17,10 +19,16 @@ function Home() {
     console.log(shows);
     return (
         <div>
-            <h1>Home Page</h1>
-            {shows.map((show) => (
-                <ShowCart key={show.id} show={show} />
-            ))}
+            <Header />
+
+
+            <h2>برترین ها</h2>
+            <Link to="/shows"> مشاهده همه</Link>
+            <div className="grid grid-cols-4">
+                {shows.slice(0, 8).map((show) => (
+                    <ShowCart key={show.id} show={show} />
+                ))}
+            </div>
         </div>
     )
 };
