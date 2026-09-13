@@ -21,13 +21,17 @@ function Home() {
         <div>
             <Header />
 
+            <div className="">
+                <div className="flex justify-between">
+                    <h2>Latest</h2>
+                    <Link to="/shows">Veiw all</Link>
+                </div>
+                <div className="grid grid-cols-4">
+                    {[...shows].sort((a, b) => new Date(b.premiered) - new Date(a.premiered)).slice(0, 8).map((show) => (
+                        <ShowCart key={show.id} show={show} />
+                    ))}
 
-            <h2>برترین ها</h2>
-            <Link to="/shows"> مشاهده همه</Link>
-            <div className="grid grid-cols-4">
-                {shows.slice(0, 8).map((show) => (
-                    <ShowCart key={show.id} show={show} />
-                ))}
+                </div>
             </div>
         </div>
     )

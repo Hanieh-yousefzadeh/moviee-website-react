@@ -9,6 +9,7 @@ function Shows() {
         async function fetchShows() {
             const response = await fetch("https://api.tvmaze.com/shows?page=1")
             const data = await response.json();
+            console.log(data)
             setShows(data)
         }
 
@@ -17,7 +18,7 @@ function Shows() {
 
     return (
         <div>
-            <h1>همه سریال‌ها</h1>
+            <h1>All movies</h1>
 
             {shows.map((show) => (
                 <ShowCart key={show.id} show={show} />

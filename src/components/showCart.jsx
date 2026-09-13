@@ -5,7 +5,7 @@ function ShowCart({ show }) {
 
             <img src={show.image.medium} alt="" />
             <h3>{show.name}</h3>
-            <p>{show.premiered}</p>
+            <p>{show.premiered?.slice(0, 4)}</p>
             <span>⭐{show.rating.average}</span>
         </Link>
     )
