@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import ShowCart from "../components/showCart";
+import Header from "../components/header";
 
 function Shows() {
-   
-        const [shows, setShows] = useState([]);
 
-     useEffect(() => {
+    const [shows, setShows] = useState([]);
+
+    useEffect(() => {
         async function fetchShows() {
             const response = await fetch("https://api.tvmaze.com/shows?page=1")
             const data = await response.json();
-            console.log(data)
+            // console.log(data)
             setShows(data)
         }
 
@@ -18,13 +19,16 @@ function Shows() {
 
     return (
         <div>
-            <h1>All movies</h1>
+            <Header/>
+            <div>
+                <h1>All movies</h1>
 
-            {shows.map((show) => (
-                <ShowCart key={show.id} show={show} />
-            ))}
+                {shows.map((show) => (
+                    <ShowCart key={show.id} show={show} />
+                ))}
+            </div>
         </div>
     );
-   
+
 };
 export default Shows;

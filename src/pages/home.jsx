@@ -10,13 +10,14 @@ function Home() {
         async function fetchShows() {
             const response = await fetch("https://api.tvmaze.com/shows?page=1")
             const data = await response.json();
+            // console.log(data)
             setShows(data)
         }
 
         fetchShows();
     }, [])
 
-    console.log(shows);
+    // console.log(shows);
     return (
         <div>
             <Header />

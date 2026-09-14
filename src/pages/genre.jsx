@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ShowCart from "../components/showCart";
+import Header from "../components/header";
 function Genre() {
 
     const [shows, setShows] = useState([]);
     const { genre } = useParams();
-    console.log(genre)
+    // console.log(genre)
 
     useEffect(() => {
         async function fetchShows() {
@@ -19,13 +20,16 @@ function Genre() {
         fetchShows();
     }, [])
     const filter = shows.filter((show) => (
-        show.genres.includes(genre[0].toUpperCase()+genre.slice(1))
+        show.genres.includes(genre[0].toUpperCase() + genre.slice(1))
     ));
     console.log(filter)
     return (
         <div>
-            <h1>{genre}</h1>
-            {filter.map((show) => (<ShowCart key={show.id} show={show} />))}
+            <Header/>
+            <div>
+                <h1>{genre}</h1>
+                {filter.map((show) => (<ShowCart key={show.id} show={show} />))}
+            </div>
         </div>
     )
 };

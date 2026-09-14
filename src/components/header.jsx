@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import { Search } from "lucide-react"
 function Header() {
     return (
@@ -6,12 +6,12 @@ function Header() {
 
             <div className="flex">
                 <Link to="/">Moviee</Link>
-                <Link to="/genre/drama">Drama</Link>
-                <Link to="/genre/Comedy">Comedy</Link>
-                <Link to="/genre/Action">Action</Link>
+                <NavLink to="/genre/drama" className={({isActive})=> isActive ? "text-red-500" :"text-black"}>Drama</NavLink>
+                <NavLink to="/genre/Comedy" className={({isActive})=> isActive ? "text-red-500" :"text-black"}>Comedy</NavLink>
+                <NavLink to="/genre/Action" className={({isActive})=> isActive ? "text-red-500" :"text-black"}>Action</NavLink>
             </div>
             <div className="flex gap-5">
-                 <Link to="/search" className="flex"><Search /> Search</Link>
+                 <NavLink to="/search"className={({isActive})=>`flex ${isActive ? "text-red-500" :"text-black"}`}><Search /> Search</NavLink>
                 <button>Sing in</button>
             </div>
 
