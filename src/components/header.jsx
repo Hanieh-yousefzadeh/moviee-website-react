@@ -1,19 +1,36 @@
 import { Link, NavLink } from "react-router";
-import { Search } from "lucide-react"
+import { useState } from "react";
+import { Search, TextAlignJustify, X } from "lucide-react"
 function Header() {
+    const [isOpen, setIsOpen] = useState(false);
+    function handelClick() {
+        return setIsOpen(!isOpen)
+    }
     return (
-        <header className="flex justify-between">
+        <header className="flex justify-between bg-[#010101] text-neutral-50 items-baseline w-full px-4 py-2.5 sm:px-8 lg:py-3.5 lg:px-15 relative">
 
-            <div className="flex">
-                <Link to="/">Moviee</Link>
-                <NavLink to="/genre/drama" className={({isActive})=> isActive ? "text-red-500" :"text-black"}>Drama</NavLink>
-                <NavLink to="/genre/Comedy" className={({isActive})=> isActive ? "text-red-500" :"text-black"}>Comedy</NavLink>
-                <NavLink to="/genre/Action" className={({isActive})=> isActive ? "text-red-500" :"text-black"}>Action</NavLink>
+            <div className="flex lg:gap-13 sm:gap-6 items-baseline ">
+                <Link to="/" className="font-plex sm:text-3xl text-2xl font-semibold">Movie<span className="text-[#CF900C]">e</span></Link>
+                <NavLink to="/genre/drama" className={({ isActive }) => `text-lg hidden sm:flex hover:text-[#CF900C] ${isActive ? "text-[#CF900C]" : "text-neutral-300"}`}>Drama</NavLink>
+                <NavLink to="/genre/Comedy" className={({ isActive }) => `text-lg hidden sm:flex hover:text-[#CF900C] ${isActive ? "text-[#CF900C]" : "text-neutral-300"}`}>Comedy</NavLink>
+                <NavLink to="/genre/Action" className={({ isActive }) => `text-lg hidden sm:flex hover:text-[#CF900C] ${isActive ? "text-[#CF900C]" : "text-neutral-300"}`}>Action</NavLink>
             </div>
-            <div className="flex gap-5">
-                 <NavLink to="/search"className={({isActive})=>`flex ${isActive ? "text-red-500" :"text-black"}`}><Search /> Search</NavLink>
-                <button>Sing in</button>
+            <div className="sm:flex sm:gap-3 hidden items-center">
+                <NavLink to="/search" className={({ isActive }) => `sm:flex ${isActive ? "text-[#CF900C]" : "text-neutral-50"}`}><Search className="sm:size-5 text-neutral-300  hover:text-[#CF900C]" strokeWidth={3} /></NavLink>
+                <button className="text-lg  hover:text-[#CF900C]">Sing in</button>
             </div>
+            <button onClick={handelClick} className="text-[#CF900C] self-center sm:hidden">
+              {isOpen ? (<X className="size-5.5 rounded-sm"/>):(<TextAlignJustify className="size-5.5 rounded-sm" />)}  
+            </button>
+            {isOpen && (
+                <div className=" absolute top-14 right-4 z-1 bg-[#CF900C] sm:hidden  flex flex-col text-left pl-2 pr-2.5 py-2.5 rounded-md gap-2">
+                    <button className="text-sm text-zinc-900 font-medium ">Sing in</button>
+                    <NavLink to="/search" className={({ isActive }) => ` flex text-sm items-baseline font-medium pl-1.5 ${isActive ? "text-[#CF900C]" : "text-zinc-900"}`}>Search</NavLink>
+                    <NavLink to="/genre/drama" className={({ isActive }) => `text-sm  font-medium hover:text-[#CF900C] pl-1.5 ${isActive ? "text-zinc-50" : "text-zinc-900"}`}>Drama</NavLink>
+                    <NavLink to="/genre/Comedy" className={({ isActive }) => `text-sm font-medium hover:text-[#CF900C] pl-1.5 ${isActive ? "text-zinc-50" : "text-zinc-900"}`}>Comedy</NavLink>
+                    <NavLink to="/genre/Action" className={({ isActive }) => `text-sm font-medium hover:text-[#CF900C] pl-1.5 ${isActive ? "text-zinc-50" : "text-zinc-900"}`}>Action</NavLink>
+                </div>
+            )}
 
         </header>
     )
