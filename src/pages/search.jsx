@@ -10,18 +10,34 @@ function Search() {
     const [result, setResult] = useState([]);
     const [selected, setSelected] = useState([]);
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [hasSearched, setHasSearched] = useState(false);
+
     useEffect(() => {
         async function getFeatured() {
-            const response = await fetch(
-                "https://api.tvmaze.com/shows?page=1"
-            );
 
-            const data = await response.json();
+            setLoading(true);
+            setError("");
 
-            setSelected(data.slice(0, 4));
+            try {
+                const response = await fetch("https://api.tvmaze.com/shows?page=1");
+
+                if (!response.ok) {
+                    throw new Error("Something went wrong");
+                }
+                const data = await response.json();
+                setSelected(data.slice(0, 4));
+                
+            }catch(error){
+                setError("Something went wrong. Please try again.");
+                setResult([]);
+            }finally{
+                setLoading(false);
+            }
         }
-
         getFeatured();
+
     }, []);
 
     function handelSearch(e) {
@@ -29,21 +45,42 @@ function Search() {
     }
 
     async function searchShows() {
+
         if (!search.trim()) {
             return alert('pleas type somthing ...')
         }
-        const response = await fetch(
-            `https://api.tvmaze.com/search/shows?q=${search}`
-        );
+        setLoading(true);
+        setError("");
+        setHasSearched(true);
 
-        const data = await response.json();
-        console.log(data)
+        try {
+            const response = await fetch(`https://api.tvmaze.com/search/shows?q=${search}`);
 
-        setResult(data);
+            if (!response.ok) {
+                throw new Error("Something went wrong");
+            }
+
+            const data = await response.json();
+            // console.log(data)
+            setResult(data);
+
+        } catch (error) {
+
+            setError("Something went wrong. Please try again.");
+            setResult([]);
+
+        } finally {
+            setLoading(false);
+        }
+
+
+
     }
 
     function handelSubmit(e) {
         e.preventDefault();
+
+        if (loading) return;
         searchShows()
         // setSearch("")
     }
@@ -61,7 +98,7 @@ function Search() {
                 </form>
 
 
-                {result.length === 0 && (
+                {!hasSearched && (
                     <div>
                         <h2 className="text-neutral-300 sm:text-xl text-base pb-10 pl-2">Most Viewed </h2>
 
@@ -73,12 +110,27 @@ function Search() {
                     </div>
                 )}
 
+                {loading && (
+                    <p className="text-neutral-300 text-center py-10">Loading... </p>
+                )}
 
-                <div className="grid sm:grid-cols-4 grid-cols-2 gap-y-5 xl:gap-y-7 gap-x-2 ">
-                    {result.map((item) => (
-                        <ShowCart key={item.show.id} show={item.show} />
-                    ))}
-                </div>
+                {!loading && error && (
+                    <p className="text-amber-600 text-center py-10">{error}</p>
+                )}
+
+                {hasSearched && result.length === 0 && (
+                    <p className="text-neutral-400 text-center py-10"> No movie found.</p>
+                )}
+
+                {result.length > 0 && (
+
+                    <div className="grid sm:grid-cols-4 grid-cols-2 gap-y-5 xl:gap-y-7 gap-x-2 ">
+                        {result.map((item) => (
+                            <ShowCart key={item.show.id} show={item.show} />
+                        ))}
+                    </div>
+                )}
+
             </div>
 
             <Footer />
